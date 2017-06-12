@@ -8,6 +8,8 @@ import 'rxjs/add/operator/filter'
 import 'rxjs/add/operator/debounceTime'
 import 'rxjs/add/operator/distinctUntilChanged'
 
+import {CountDownComponent} from '../countdown-timer/countdown.component'
+
 @Component({
     selector:'contact-us',
     templateUrl : './contact-us.template.html',
@@ -42,38 +44,19 @@ export class ContactUsComponent implements OnInit{
             user_subject:["",Validators.required],
             user_message:["",FormValidators.LimitMessageText]
         });
-
-        // var count = 10;
-        // Observable.interval(1000)
-        //     .take(count)
-        //     .filter(x=>x>0)
-        //     .map(x=>count-x)
-        //     .subscribe(x=>{
-        //     console.log(x);
-        // })
-
-        var count = 60;
-        Observable.timer(0,1000)
-            .take(count)
-            .map(()=>--count)
-            .subscribe(x=>console.log(x));
-        // var _email = this.contactForm.controls['user_email'];
-        // _email.valueChanges
-        //     .filter(f_val=>f_val.length>4)
-        //     .debounceTime(500)
-        //     .distinctUntilChanged()
-        //     .flatMap(x=>{
-        //         return "Email is: "+x
-        //     })
-        //     .subscribe(x=>{
-        //         console.log(x);
-        //     })
     }
 
     processForm(){
         //alert(this.contactForm.controls['fullname'].value);
         //console.log(this.contactForm.controls);
-        this._contactUsService.sendFormRequest([{'fullname':'azaz'}]);
+        this._contactUsService.sendFormRequest([
+            {'fullname':this.contactForm.controls['user_fullname'].value},
+            {'email':this.contactForm.controls['user_email'].value},
+            {'phone':this.contactForm.controls['user_phone'].value},
+            {'subject':this.contactForm.controls['user_subject'].value},
+            {'message':this.contactForm.controls['user_message'].value}
+            ]);
         this.onFormSubmit.emit();
     }
+
 }
