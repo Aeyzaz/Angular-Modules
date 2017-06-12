@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="col-md-5">
+        <div class="form-area">
+            <form [formGroup]="contactForm" (ngSubmit)="processForm()" role="form">
+                <br style="clear:both">
+                <h3 style="margin-bottom: 25px; text-align: center;">Contact Form</h3>
+                <div class="form-group">
+                    <input formControlName="user_fullname" type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                    <div *ngIf="contactForm.controls.user_fullname.touched && contactForm.controls.user_fullname.errors ">
+                        <div class="alert alert-danger" *ngIf="contactForm.controls.user_fullname.errors.required">
+                            Required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input formControlName="user_email" type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                    <div *ngIf="contactForm.controls.user_email.touched && contactForm.controls.user_email.errors">
+                        <div class="alert alert-danger" *ngIf="contactForm.controls.user_email.errors.validEmail">
+                            Invalid Email Address
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input 
+                        formControlName="user_phone" 
+                        type="text" 
+                        class="form-control" 
+                        id="mobile" 
+                        name="mobile" 
+                        placeholder="Mobile Number" 
+                        required>
+                    <div *ngIf="contactForm.controls.user_phone.touched && contactForm.controls.user_phone.errors">
+                        <div class="alert alert-danger" *ngIf="contactForm.controls.user_phone.errors.numberError">
+                            Please Enter Numbers Only.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input 
+                        formControlName="user_subject" 
+                        type="text" 
+                        class="form-control" 
+                        id="subject" 
+                        name="subject" 
+                        placeholder="Subject"
+                        minlength="5" 
+                        required>
+                    <div *ngIf="contactForm.controls.user_subject.touched && contactForm.controls.user_subject.errors">
+                        <div class="alert alert-danger" *ngIf="contactForm.controls.user_subject.errors.required">
+                            Subject is Required
+                        </div>
+                        <div class="alert alert-danger" *ngIf="contactForm.controls.user_subject.errors.minlength">
+                            Minimum length should be {{contactForm.controls.user_subject.errors.minlength.requiredLength}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea 
+                        formControlName="user_message" 
+                        class="form-control" 
+                        type="textarea" 
+                        id="message" 
+                        placeholder="Message" 
+                        rows="7"
+                        maxlength="150"
+                        ></textarea>
+                    <div *ngIf="contactForm.controls.user_message.touched && contactForm.controls.user_message.errors">
+                        <div *ngIf="contactForm.controls.user_message.errors.limitLength">
+                            <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit of {{contactForm.controls.user_message.errors.maxLength}}</p></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+            </form>
+        </div>
+    </div>
+</div>
